@@ -6,7 +6,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     formData.append('file', file);
 
     try {
-        const response = await fetch('https://hp9nidyl84.execute-api.ap-south-1.amazonaws.com/dev', {
+        const response = await fetch('https://hp9nidyl84.execute-api.ap-south-1.amazonaws.com/dev/', {
             method: 'POST',
             body: formData
         });
