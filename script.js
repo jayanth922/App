@@ -6,7 +6,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     fetch('https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url')
         .then(response => response.json())
         .then(data => {
-            const presignedUrl = data.url;
+            const presignedUrl = data.uploadURL;
             fetch(presignedUrl, {
                 method: 'PUT',
                 body: file,
