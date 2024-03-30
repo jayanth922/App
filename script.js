@@ -1,19 +1,27 @@
-document.getElementById('uploadForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fileInput = document.getElementById('file');
-    const file = fileInput.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-        const response = await fetch('https://hp9nidyl84.execute-api.ap-south-1.amazonaws.com/dev/', {
-            method: 'POST',
-            body: formData
-        });
-
-        const metadata = await response.json();
-        document.getElementById('metadata').innerText = JSON.stringify(metadata, null, 2);
-    } catch (err) {
-        console.error(err);
-    }
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const file = document.getElementById('fileInput').files[0];
+    const fileName = file.name;
+    // Call your API to get the presigned URL
+    fetch('https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url')
+        .then(response => response.json())
+        .then(data => {
+            const presignedUrl = data.url;
+            fetch(presignedUrl, {
+                method: 'PUT',
+                body: file,
+                headers: {
+                    'Content-Type': 'image/jpeg'
+                }
+            })
+            .then(uploadResponse => {
+                if (uploadResponse.ok) {
+                    console.log('Image successfully uploaded');
+                } else {
+                    console.error('Upload failed');
+                }
+            })
+            .catch(error => console.error('Error uploading image:', error));
+        })
+        .catch(error => console.error('Error getting presigned URL:', error));
 });
