@@ -1,8 +1,8 @@
 document.getElementById('uploadForm').addEventListener('submit', function(event) {
      file = document.getElementById('fileInput').files[0];
      fileName = file.name;
-    console.error(file);
-    console.error(file.type)
+    // console.error(file);
+    // console.error(file.type)
 
     // Call your API to get the presigned URL
     async function getdata(url = "", data = {}) {
