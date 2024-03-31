@@ -3,29 +3,19 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     const file = document.getElementById('fileInput').files[0];
     const fileName = file.name;
     // Call your API to get the presigned URL
-    fetch('https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url')
-        .then(response => response.json())
-        .then(data => {
-            const presignedUrl = data.url;
-            console.log(response);
-            console.log(data);
-            console.log(data.url);
-            console.log(presignedUrl);
-            fetch(presignedUrl, {
+    async function getdata(url = "", data = {}) {
+      const response = await fetch(url, {
                 method: 'PUT',
-                body: file,
+                mode: 'cors',
+                cache: 'no-cache',
+                body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'image/jpeg'
                 }
-            })
-            .then(uploadResponse => {
-                if (uploadResponse.ok) {
-                    console.log('Image successfully uploaded');
-                } else {
-                    console.error('Upload failed');
-                }
-            })
-            .catch(error => console.error('Error uploading image:', error));
-        })
-        .catch(error => console.error('Error getting presigned URL:', error));
+            });
+
+return response.json();
+}
+    getdata("https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url", { answer: file }).then((data) => {
+  console.log(data); // JSON data parsed by `data.json()` call
 });
