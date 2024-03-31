@@ -15,13 +15,13 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     fd.append("file", file);
     fd.append('key', photoFilename);
     fd.append('Content-Type', file.type);
-    
+
       // Use photoFilename as the file name
 
     // Upload the image using the presigned URL
     const uploadResponse = await fetch(presignedUrl, {
       method: 'PUT',
-      body: formData
+      body: fd
     });
 
     if (uploadResponse.ok) {
