@@ -1,48 +1,39 @@
-// Function to send API request to Lambda function
-async function sendRequest() {
-  try {
-    // Send request to Lambda function to get pre-signed URL
-    const response = await fetch('https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url');
-    const responseBody = await response.json();
+const uploadButton = document.getElementById("uploadButton");
+const imageFile = document.getElementById("imageFile");
+const message = document.getElementById("message");
 
-    // Logging to check the structure of the response body
-    console.log('API Response Body:', responseBody);
-
-    // Extract uploadURL and photoFilename from the response
-    const { uploadURL, photoFilename } = responseBody;
-    console.log(uploadURL);
-    console.log(photoFilename);
-
-    // Check if uploadURL is undefined
-    if (!uploadURL) {
-      console.error('Upload URL is undefined');
-      return;
-    }
-
-    // Get the file selected by the user
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
-
-    // Upload the file to S3 using the pre-signed URL
-    const uploadResponse = await fetch(uploadURL, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': file.type // Set the correct Content-Type header
-      },
-      body: file
-    });
-
-    if (uploadResponse.ok) {
-      console.log('File uploaded successfully');
-    } else {
-      console.error('Failed to upload file');
-    }
-  } catch (error) {
-    console.error('Error:', error);
+uploadButton.addEventListener("click", async () => {
+  const file = imageFile.files[0];
+  if (!file) {
+    message.textContent = "Please select an image file to upload.";
+    return;
   }
-}
 
-// Event listener for the button click
-document.getElementById('submit').addEventListener('click', sendRequest);
+  // Generate a unique object key for the image in S3
+  const objectKey = `${Date.now()}-${file.name}`;
 
+  // AWS configuration (replace with your credentials)
+  const AWS = require("aws-sdk");
+  AWS.config.update({
+    region: "ap-south-1",
+  });
 
+  const s3 = new AWS.S3();
+
+  try {
+    const uploadParams = {
+      Bucket: "midterm-takehome",
+      Key: objectKey,
+      Body: file,
+    };
+
+    const uploadResult = await s3.upload(uploadParams).promise();
+    console.log("Image uploaded successfully:", uploadResult.Location);
+    message.textContent = "Image uploaded successfully! Lambda triggered for metadata processing.";
+  } catch (error) {
+    console.error("Upload error:", error);
+    message.textContent = "Upload failed. Please check the console for details.";
+  }
+});
+
+// Removed the sendMetadataToServer function as Lambda handles it now.
