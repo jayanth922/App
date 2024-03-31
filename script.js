@@ -27,7 +27,7 @@ async function sendRequest() {
       credentials: 'same-origin',
       mode: 'cors',
       headers: {
-        'content-type': 'image/jpg' // Set the correct Content-Type header
+        'content-type': 'image/jpeg' // Set the correct Content-Type header
       },
       body: file
     });
