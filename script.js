@@ -10,6 +10,8 @@ async function sendRequest() {
 
     // Extract uploadURL and photoFilename from the response
     const { uploadURL, photoFilename } = responseBody;
+    console.log(uploadURL);
+    console.log(photoFilename);
 
     // Check if uploadURL is undefined
     if (!uploadURL) {
@@ -27,7 +29,7 @@ async function sendRequest() {
       credentials: 'same-origin',
       mode: 'cors',
       headers: {
-        'content-type': 'image/jpeg' // Set the correct Content-Type header
+        'Content-Type': 'image/jpeg' // Set the correct Content-Type header
       },
       body: file
     });
