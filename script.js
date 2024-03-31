@@ -6,14 +6,14 @@ async function sendRequest() {
     // const data = await response.json();
 
     // Extract uploadURL and photoFilename from the response
-    // const { uploadURL, photoFilename } = data;
+    const { uploadURL, photoFilename } = response;
 
     // Get the file selected by the user
     const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
 
     // Upload the file to S3 using the pre-signed URL
-    const uploadResponse = await fetch(response.uploadURL, {
+    const uploadResponse = await fetch(uploadURL, {
       method: 'PUT',
       credentials: 'same-origin',
       mode: 'cors',
