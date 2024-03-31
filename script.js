@@ -7,7 +7,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     // Call your API to get the presigned URL
     async function getdata(url = "", data = {}) {
        response = await fetch(url, {
-                method: 'POST',
+                method: 'PUT',
                 mode: 'cors',
                 cache: 'no-cache',
                 headers: {
