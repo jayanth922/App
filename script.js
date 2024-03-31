@@ -26,10 +26,8 @@ async function sendRequest() {
     // Upload the file to S3 using the pre-signed URL
     const uploadResponse = await fetch(uploadURL, {
       method: 'PUT',
-      credentials: 'same-origin',
-      mode: 'cors',
       headers: {
-        'Content-Type': 'image/jpeg' // Set the correct Content-Type header
+        'Content-Type': file.type // Set the correct Content-Type header
       },
       body: file
     });
