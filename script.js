@@ -1,12 +1,12 @@
 document.getElementById('uploadForm').addEventListener('submit', function(event) {
-    const file = document.getElementById('fileInput').files[0];
-    const fileName = file.name;
+     file = document.getElementById('fileInput').files[0];
+     fileName = file.name;
     console.log(file);
     console.log(file.type)
 
     // Call your API to get the presigned URL
     async function getdata(url = "", data = {}) {
-      const response = await fetch(url, {
+       response = await fetch(url, {
                 method: 'POST',
                 mode: 'cors',
                 cache: 'no-cache',
