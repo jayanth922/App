@@ -3,14 +3,20 @@ async function sendRequest() {
   try {
     // Send request to Lambda function to get pre-signed URL
     const response = await fetch('https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url');
-    const data = await response;
-    console.log('API Response:', data);
+    const responseBody = await response.json();
+
+    // Logging to check the structure of the response body
+    console.log('API Response Body:', responseBody);
+
     // Extract uploadURL and photoFilename from the response
-    const { uploadURL, photoFilename } = data;
+    const { uploadURL, photoFilename } = responseBody;
+
+    // Check if uploadURL is undefined
     if (!uploadURL) {
       console.error('Upload URL is undefined');
       return;
     }
+
     // Get the file selected by the user
     const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
