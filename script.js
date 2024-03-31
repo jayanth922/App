@@ -5,13 +5,13 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     // Call your API to get the presigned URL
     async function getdata(url = "", data = {}) {
       const response = await fetch(url, {
-                method: 'PUT',
+                method: 'POST',
                 mode: 'cors',
                 cache: 'no-cache',
-                body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'image/jpeg'
-                }
+                },
+              body: JSON.stringify(data)
             });
 
 return response.json();
