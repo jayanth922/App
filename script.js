@@ -1,24 +1,32 @@
-document.getElementById('submit').addEventListener('click', async function() {
+// Function to send API request to Lambda function
+async function sendRequest() {
   try {
-    // Step 1: Send request to your endpoint to get pre-signed URL and filename
+    // Send request to Lambda function
     const response = await fetch('https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url');
-    if (!response.ok) {
-      throw new Error('Failed to fetch pre-signed URL');
-    }
-    const { url, filename } = await response.json();
+    const data = await response.json();
 
-    // Step 2: Upload image to S3 using pre-signed URL
-    const file = document.getElementById('file-input').files[0];
-    const s3Response = await fetch(url, {
+    // Extract uploadURL and photoFilename from the response
+    const { uploadURL, photoFilename } = data;
+
+    // Create a FormData object to hold the file and its name
+    const formData = new FormData();
+    formData.append('file', document.getElementById('fileInput').files[0], photoFilename);
+
+    // Send PUT request to uploadURL with the file
+    const uploadResponse = await fetch(uploadURL, {
       method: 'PUT',
-      body: file
+      body: formData.get('file')
     });
-    if (!s3Response.ok) {
-      throw new Error('Failed to upload image to S3');
+    
+    if (uploadResponse.ok) {
+      console.log('File uploaded successfully');
+    } else {
+      console.error('Failed to upload file');
     }
-
-    console.log('Image uploaded successfully:', filename);
   } catch (error) {
     console.error('Error:', error);
   }
-});
+}
+
+// Event listener for the button click
+document.getElementById('submit').addEventListener('click', sendRequest);
