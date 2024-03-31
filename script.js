@@ -15,11 +15,10 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 },
               body: JSON.stringify(data)
             });
-
+       console.log(response);
       return response.json();
 }
 // console.error(body);
-    console.log(response);
     getdata("https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url", { answer: file }).then((data) => {
   console.log(data); // JSON data parsed by `data.json()` call
 });
