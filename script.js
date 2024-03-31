@@ -3,20 +3,22 @@ async function sendRequest() {
   try {
     // Send request to Lambda function to get pre-signed URL
     const response = await fetch('https://tzzbrzpvv1.execute-api.ap-south-1.amazonaws.com/default/presigned-url');
-    const data = await response.json();
+    // const data = await response.json();
 
     // Extract uploadURL and photoFilename from the response
-    const { uploadURL, photoFilename } = data;
+    // const { uploadURL, photoFilename } = data;
 
     // Get the file selected by the user
     const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
 
     // Upload the file to S3 using the pre-signed URL
-    const uploadResponse = await fetch(uploadURL, {
+    const uploadResponse = await fetch(response.uploadURL, {
       method: 'PUT',
+      credentials: 'same-origin',
+      mode: 'cors',
       headers: {
-        'Content-Type': 'image/jpg' // Set the correct Content-Type header
+        'content-type': 'image/jpg' // Set the correct Content-Type header
       },
       body: file
     });
