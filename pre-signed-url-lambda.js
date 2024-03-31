@@ -14,7 +14,7 @@ const getUploadURL = async function() {
   const s3Params = {
     Bucket: process.env.UploadBucket,
     Key:  `${randomId}.jpg`,
-    ContentType:  'image/jpeg',
+    ContentType:  'image/jpg',
     ACL: 'public-read'
   }
   

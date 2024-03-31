@@ -7,6 +7,9 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
         .then(response => response.json())
         .then(data => {
             const presignedUrl = data.url;
+            console.log(presignedUrl);
+            console.log(file);
+            console.log(file.type);
             fetch(presignedUrl, {
                 method: 'PUT',
                 body: file,
