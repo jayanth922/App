@@ -11,7 +11,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
                 method: 'PUT',
                 body: file,
                 headers: {
-                    'Content-Type': 'image/jpeg'
+                    'Content-Type': 'image/jpg'
                 }
             })
             .then(uploadResponse => {
