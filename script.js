@@ -12,12 +12,15 @@ async function sendRequest() {
     const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
 
-    // Send PUT request to uploadURL with the file
+    // Upload the file to S3 using the pre-signed URL
     const uploadResponse = await fetch(uploadURL, {
       method: 'PUT',
+      headers: {
+        'Content-Type': 'image/jpg' // Set the correct Content-Type header
+      },
       body: file
     });
-    
+
     if (uploadResponse.ok) {
       console.log('File uploaded successfully');
     } else {
@@ -30,3 +33,5 @@ async function sendRequest() {
 
 // Event listener for the button click
 document.getElementById('submit').addEventListener('click', sendRequest);
+
+
