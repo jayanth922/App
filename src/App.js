@@ -16,7 +16,7 @@ function App() {
   };
 
   const handleUpload = async () => {
-    if (!file) return;
+    if (!file) return; 
 
     try {
       const params = {
